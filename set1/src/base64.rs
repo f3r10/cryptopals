@@ -1,12 +1,7 @@
+use crate::hex_decode;
+
 pub fn hex_to_base64(hex_str: &str) -> String {
-    // Remove leading "0x" from hex string (optional) and grouping hex bytes
-    let hex_bytes = hex_str
-        .trim_start_matches("0x")
-        .as_bytes()
-        .chunks(2)
-        .map(|nibbles| std::str::from_utf8(&nibbles).unwrap())
-        .map(|s| u8::from_str_radix(&s, 16).unwrap())
-        .collect::<Vec<u8>>();
+    let hex_bytes = hex_decode(hex_str);
 
     // println!("hex_str_bytes {:?}", hex_str.trim_start_matches("0x").as_bytes());
     // println!("hex_bytes {:?}", hex_bytes);
@@ -65,7 +60,6 @@ fn u8_to_base64(u: u8) -> char {
         _ => panic!("byte exceeded range {}", u),
     }
 }
-
 
 #[cfg(test)]
 mod tests {
