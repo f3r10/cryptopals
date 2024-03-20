@@ -1,4 +1,7 @@
-use set1::{base64::hex_to_base64, single_byte_xor_cipher::decipher_message};
+use set1::{
+    base64::hex_to_base64, challenge_4::decipher_hidden_line,
+    single_byte_xor_cipher::decipher_message,
+};
 
 fn main() {
     println!("hex_to_base64: {}", hex_to_base64("49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d"));
@@ -9,4 +12,7 @@ fn main() {
         "decipher_message {:?} with score {:?}",
         decrypted_msg, score
     );
+
+    let decrypted_msg = decipher_hidden_line("files/4.txt".to_string());
+    println!("decrypted_msg {:?}", decrypted_msg);
 }
