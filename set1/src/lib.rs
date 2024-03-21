@@ -6,6 +6,7 @@ use std::{
 
 pub mod base64;
 pub mod challenge_4;
+pub mod challenge_5;
 pub mod fixed_xor;
 pub mod single_byte_xor_cipher;
 
