@@ -4,9 +4,12 @@ use std::{
     path::Path,
 };
 
+use fixed_xor::fixed_xor;
+
 pub mod base64;
 pub mod challenge_4;
 pub mod challenge_5;
+pub mod challenge_6;
 pub mod fixed_xor;
 pub mod single_byte_xor_cipher;
 
@@ -27,10 +30,30 @@ pub fn hex_encode(vec: Vec<u8>) -> String {
         .join("")
 }
 
+pub fn hamming_distance(str1: &[u8], str2: &[u8]) -> u64 {
+    fixed_xor(&str1.to_vec(), &str2.to_vec())
+        .iter()
+        .fold(0, |a, b| a + b.count_ones() as u64)
+}
+
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where
     P: AsRef<Path>,
 {
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::hamming_distance;
+
+    #[test]
+    fn hamming_distance_test() {
+        let str1 = "this is a test";
+        let str2 = "wokka wokka!!!";
+        let expected = 37 as u64;
+        let result = hamming_distance(str1.as_bytes(), str2.as_bytes());
+        assert_eq!(result, expected);
+    }
 }

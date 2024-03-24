@@ -11,6 +11,20 @@ pub fn fixed_xor(input1_bytes: &Vec<u8>, input2_bytes: &Vec<u8>) -> Vec<u8> {
     return result;
 }
 
+pub fn dynamic_xor(input1_bytes: &Vec<u8>, input2_bytes: &Vec<u8>) -> Vec<u8> {
+    input1_bytes
+        .chunks(input2_bytes.len())
+        .fold(vec![], |mut acc, chunk| {
+            let len = chunk.len();
+            let key = &input2_bytes[..len];
+            acc.push(fixed_xor(&chunk.to_vec(), &key.to_vec()));
+            acc
+        })
+        .into_iter()
+        .flatten()
+        .collect::<Vec<_>>()
+}
+
 #[cfg(test)]
 mod tests {
     use crate::{fixed_xor::fixed_xor, hex_decode, hex_encode};
