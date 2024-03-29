@@ -5,11 +5,11 @@ use std::{
 };
 
 use fixed_xor::fixed_xor;
-
 pub mod base64;
 pub mod challenge_4;
 pub mod challenge_5;
 pub mod challenge_6;
+pub mod challenge_7;
 pub mod fixed_xor;
 pub mod single_byte_xor_cipher;
 
@@ -34,6 +34,16 @@ pub fn hamming_distance(str1: &[u8], str2: &[u8]) -> u64 {
     fixed_xor(&str1.to_vec(), &str2.to_vec())
         .iter()
         .fold(0, |a, b| a + b.count_ones() as u64)
+}
+
+pub fn read_base64_file(path: String) -> Vec<u8> {
+    let mut content = String::new();
+    if let Ok(lines) = read_lines(path) {
+        for line in lines.flatten() {
+            content.push_str(&line);
+        }
+    }
+    ::base64::Engine::decode(&::base64::engine::general_purpose::STANDARD, content).unwrap()
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>

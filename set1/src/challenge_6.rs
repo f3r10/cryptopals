@@ -1,20 +1,8 @@
-use base64::{engine::general_purpose, Engine};
-
 use crate::{
     fixed_xor::dynamic_xor,
-    hamming_distance, read_lines,
+    hamming_distance,
     single_byte_xor_cipher::{break_single_byte_xor, calc_letter_freq_score},
 };
-
-pub fn read_base64_file(path: String) -> Vec<u8> {
-    let mut content = String::new();
-    if let Ok(lines) = read_lines(path) {
-        for line in lines.flatten() {
-            content.push_str(&line);
-        }
-    }
-    general_purpose::STANDARD.decode(content).unwrap()
-}
 
 pub fn get_normalized_hamming_distance(input: &[u8], k_size: usize) -> f32 {
     let mut distance = 0f32;
@@ -81,7 +69,7 @@ pub fn break_multiple_xor(input: &[u8]) -> Vec<u8> {
 
 #[cfg(test)]
 mod tests {
-    use crate::challenge_6::{break_multiple_xor, read_base64_file};
+    use crate::{challenge_6::break_multiple_xor, read_base64_file};
 
     #[test]
     fn challenge_6_test() {
