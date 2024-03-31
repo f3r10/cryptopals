@@ -12,6 +12,7 @@ pub mod challenge_6;
 pub mod challenge_7;
 pub mod fixed_xor;
 pub mod single_byte_xor_cipher;
+pub mod challenge_8;
 
 /// Remove leading "0x" from hex string (optional) and grouping hex bytes
 pub fn hex_decode(hex: &str) -> Vec<u8> {
