@@ -1,4 +1,9 @@
 [workspace]
 members =[
 "set1",
+"set2"
 ]
+
+[workspace.dependencies]
+set1 = {path = "./set1"}
+
